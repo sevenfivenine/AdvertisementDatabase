@@ -10,6 +10,7 @@ public class Layout {
 	
 	public static final int BUSINESS = 0;
 	public static final int MONTH = 1;
+	public static final int NEW_BUSINESS = 2;
 	
 	protected ArrayList<JComponent> components;
 	
