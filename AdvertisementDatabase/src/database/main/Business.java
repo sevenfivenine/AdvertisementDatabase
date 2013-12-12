@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 public class Business {
 	private String name, address, city, state, zip, phone, email;
+	private ArrayList<Advertisement> advertisements;
 
 	public Business() {
-
+		
 	}
 
 	public Business(String name, String address, String city, String state,
@@ -19,6 +20,8 @@ public class Business {
 		this.zip = zip;
 		this.phone = phone;
 		this.email = email;
+		
+		setAdvertisements(new ArrayList<Advertisement>());
 	}
 
 	public Business(String[] arguments) {
@@ -30,6 +33,8 @@ public class Business {
 		this.zip = arguments[4];
 		this.phone = arguments[5];
 		this.email = arguments[6];
+		
+		setAdvertisements(new ArrayList<Advertisement>());
 	}
 
 	public String formatNull(String s) {
@@ -105,6 +110,14 @@ public class Business {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public ArrayList<Advertisement> getAdvertisements() {
+		return advertisements;
+	}
+
+	public void setAdvertisements(ArrayList<Advertisement> advertisements) {
+		this.advertisements = advertisements;
 	}
 
 }

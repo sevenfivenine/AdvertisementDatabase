@@ -145,6 +145,10 @@ public class PanelBusiness extends JPanel {
 		lblEmail = new JLabel("Email");
 		lblEmail.setBounds(10, 218, 180, 14);
 		add(lblEmail);
+		
+		PanelAdvertisement panel = new PanelAdvertisement();
+		panel.setBounds(55, 290, 238, 179);
+		add(panel);
 	}
 
 	public void updatePanel() {
