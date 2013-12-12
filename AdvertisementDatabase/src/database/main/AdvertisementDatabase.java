@@ -1,7 +1,10 @@
 package database.main;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -9,8 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -18,14 +20,7 @@ import database.layouts.Layout;
 import database.layouts.PanelBusiness;
 import database.layouts.PanelMonth;
 import database.layouts.PanelNewBusiness;
-
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
 
 
 public class AdvertisementDatabase {
@@ -69,9 +64,16 @@ public class AdvertisementDatabase {
 		monthLayout = new Layout(1, "month");
 		newBusinessLayout = new Layout(2, "new business");
 		
+		try {
+			Data.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		currentLayout = Layout.BUSINESS;
 		initialize();
 		openLayout(currentLayout);
+		
 	}
 
 	/**
@@ -79,6 +81,16 @@ public class AdvertisementDatabase {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				try {
+					Data.save();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		frame.setSize(1000, 600);
 		frame.setLocationRelativeTo(null);
 		//frame.setBounds(100, 100, 450, 300);
@@ -113,6 +125,18 @@ public class AdvertisementDatabase {
 			}
 		});
 		mnNew.add(mntmBusiness);
+		
+		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Data.save();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		mnFile.add(mntmSave);
 
 		JMenu mnEdit = new JMenu("Edit");
 		menuBar.add(mnEdit);
@@ -219,12 +243,4 @@ public class AdvertisementDatabase {
 			}
 		}
 	}
-
-	/*public Data getData() {
-		return data;
-	}
-
-	public void setData(Data data) {
-		this.data = data;
-	}*/
 }

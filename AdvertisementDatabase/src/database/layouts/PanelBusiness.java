@@ -19,17 +19,19 @@ import java.awt.event.ActionEvent;
 public class PanelBusiness extends JPanel {
 
 	private JTextField txtAddress;
-	private JTextField txtCity;
-	private JTextField txtZip;
-	private JTextField txtName;
-	private JTextField txtState;
-	private JTextField txtPhone;
-	private JTextField txtEmail;
 
 	private int currentBusiness;
 	private JButton mbutton;
 	private JButton mbutton_1;
 	private JLabel mlabel;
+	
+	private JLabel lblBusinessName;
+	private JLabel lblAddress;
+	private JLabel lblCity;
+	private JLabel lblState;
+	private JLabel lblZip;
+	private JLabel lblPhone;
+	private JLabel lblEmail;
 
 	/**
 	 * Create the panel.
@@ -40,7 +42,7 @@ public class PanelBusiness extends JPanel {
 
 		currentBusiness = 0;
 
-		JLabel lblBusinessName = new JLabel("Business Name");
+		lblBusinessName = new JLabel("Business Name");
 		lblBusinessName.setFont(new Font("Lucida Grande", Font.PLAIN, 32));
 		lblBusinessName.setBounds(377, 25, 233, 33);
 		add(lblBusinessName);
@@ -57,66 +59,30 @@ public class PanelBusiness extends JPanel {
 		}
 		add(txtAddress);
 		txtAddress.setColumns(10);
-
-		txtCity = new JTextField();
 		try {
-			txtCity.setText(Data.businessList.get(currentBusiness).getCity());
 		} catch (Exception e) {
 			//e.printStackTrace();
 		}
-		txtCity.setBounds(6, 174, 216, 28);
-		add(txtCity);
-		txtCity.setColumns(10);
-
-		txtZip = new JTextField();
 		try {
-			txtZip.setText(Data.businessList.get(currentBusiness).getZip());
 		} catch (Exception e) {
 			//e.printStackTrace();
 		}
-		txtZip.setBounds(6, 214, 90, 28);
-		add(txtZip);
-		txtZip.setColumns(10);
-
-		txtName = new JTextField();
 		try {
-			txtName.setText(Data.businessList.get(currentBusiness).getName());
 		} catch (Exception e) {
 			//e.printStackTrace();
 		}
-		txtName.setBounds(6, 94, 287, 28);
-		add(txtName);
-		txtName.setColumns(10);
-
-		txtState = new JTextField();
 		try {
-			txtState.setText(Data.businessList.get(currentBusiness).getState());
 		} catch (Exception e) {
 			//e.printStackTrace();
 		}
-		txtState.setBounds(234, 174, 59, 28);
-		add(txtState);
-		txtState.setColumns(10);
-
-		txtPhone = new JTextField();
 		try {
-			txtPhone.setText(Data.businessList.get(currentBusiness).getPhone());
 		} catch (Exception e) {
 			//e.printStackTrace();
 		}
-		txtPhone.setBounds(796, 94, 186, 28);
-		add(txtPhone);
-		txtPhone.setColumns(10);
-
-		txtEmail = new JTextField();
 		try {
-			txtEmail.setText(Data.businessList.get(currentBusiness).getEmail());
 		} catch (Exception e) {
 			//e.printStackTrace();
 		}
-		txtEmail.setBounds(796, 134, 186, 28);
-		add(txtEmail);
-		txtEmail.setColumns(10);
 
 		mbutton = new JButton("Previous");
 		mbutton.addActionListener(new ActionListener() {
@@ -155,20 +121,43 @@ public class PanelBusiness extends JPanel {
 		mlabel = new JLabel("0");
 		mlabel.setBounds(941, 34, 15, 14);
 		add(mlabel);
+		
+		lblAddress = new JLabel("Address");
+		lblAddress.setBounds(10, 93, 180, 14);
+		add(lblAddress);
+		
+		lblCity = new JLabel("City");
+		lblCity.setBounds(10, 118, 180, 14);
+		add(lblCity);
+		
+		lblState = new JLabel("State");
+		lblState.setBounds(10, 143, 180, 14);
+		add(lblState);
+		
+		lblZip = new JLabel("ZIP");
+		lblZip.setBounds(10, 168, 180, 14);
+		add(lblZip);
+		
+		lblPhone = new JLabel("Phone");
+		lblPhone.setBounds(10, 193, 180, 14);
+		add(lblPhone);
+		
+		lblEmail = new JLabel("Email");
+		lblEmail.setBounds(10, 218, 180, 14);
+		add(lblEmail);
 	}
 
 	public void updatePanel() {
 		try {
-			txtAddress.setText(Data.businessList.get(currentBusiness).getAddress());
-			txtCity.setText(Data.businessList.get(currentBusiness).getCity());
-			txtZip.setText(Data.businessList.get(currentBusiness).getZip());
-			txtName.setText(Data.businessList.get(currentBusiness).getName());
-			txtState.setText(Data.businessList.get(currentBusiness).getState());
-			txtPhone.setText(Data.businessList.get(currentBusiness).getPhone());
-			txtEmail.setText(Data.businessList.get(currentBusiness).getEmail());
+			lblBusinessName.setText(Data.businessList.get(currentBusiness).getName());
+			lblAddress.setText(Data.businessList.get(currentBusiness).getAddress());
+			lblCity.setText(Data.businessList.get(currentBusiness).getCity());
+			lblZip.setText(Data.businessList.get(currentBusiness).getZip());
+			lblState.setText(Data.businessList.get(currentBusiness).getState());
+			lblPhone.setText(Data.businessList.get(currentBusiness).getPhone());
+			lblEmail.setText(Data.businessList.get(currentBusiness).getEmail());
 		} catch (Exception e) {
 			//e.printStackTrace();
 		}
 	}
-
 }

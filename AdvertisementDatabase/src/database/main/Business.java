@@ -1,5 +1,7 @@
 package database.main;
 
+import java.util.ArrayList;
+
 public class Business {
 	private String name, address, city, state, zip, phone, email;
 
@@ -18,9 +20,35 @@ public class Business {
 		this.phone = phone;
 		this.email = email;
 	}
-	
+
+	public Business(String[] arguments) {
+		super();
+		this.name = arguments[0];
+		this.address = arguments[1];
+		this.city = arguments[2];
+		this.state = arguments[3];
+		this.zip = arguments[4];
+		this.phone = arguments[5];
+		this.email = arguments[6];
+	}
+
+	public String formatNull(String s) {
+		if(s.equals("")) {
+			return "<NULL>";
+		}
+
+		return s;
+	}
+
 	public String toString() {
 		return "Name: " + name + " Address: " + address + " City: " + city + " State: " + state + " ZIP: " + zip + " Phone: " + phone + " Email: " + email;
+	}
+
+	public String toCSV() {
+		String delimiter = ",";
+		String newline = "\r\n";
+		return formatNull(name) + delimiter + formatNull(address) + delimiter + formatNull(city) + delimiter
+				+ formatNull(state) + delimiter + formatNull(zip) + delimiter + formatNull(phone) + delimiter + formatNull(email) + newline;
 	}
 
 	public String getName() {
