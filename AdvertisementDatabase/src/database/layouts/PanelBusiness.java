@@ -122,7 +122,9 @@ public class PanelBusiness extends JPanel {
 		mbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					currentBusiness -= 1;
+					if(currentBusiness > 0) {
+						currentBusiness -= 1;
+					}
 					updatePanel();
 					mlabel.setText(Integer.toString(currentBusiness));
 				} catch (Exception e1) {
@@ -137,7 +139,9 @@ public class PanelBusiness extends JPanel {
 		mbutton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					currentBusiness += 1;
+					if(currentBusiness < Data.businessList.size() - 1) {
+						currentBusiness += 1;
+					}
 					updatePanel();
 					mlabel.setText(Integer.toString(currentBusiness));
 				} catch (Exception e1) {
