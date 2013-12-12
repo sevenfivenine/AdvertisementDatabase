@@ -1,3 +1,4 @@
+package database.main;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import database.layouts.Layout;
 import database.layouts.PanelBusiness;
@@ -22,9 +25,12 @@ import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Dimension;
 
 
 public class AdvertisementDatabase {
+	
+	//private Data data;
 
 	private JFrame frame;
 	private int currentLayout;
@@ -36,7 +42,7 @@ public class AdvertisementDatabase {
 	private PanelBusiness panelBusiness;
 	private PanelMonth panelMonth;
 	private PanelNewBusiness panelNewBusiness;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -57,10 +63,12 @@ public class AdvertisementDatabase {
 	 * Create the application.
 	 */
 	public AdvertisementDatabase() {
+		//setData(new Data());
+		
 		businessLayout = new Layout(0, "business");
 		monthLayout = new Layout(1, "month");
 		newBusinessLayout = new Layout(2, "new business");
-
+		
 		currentLayout = Layout.BUSINESS;
 		initialize();
 		openLayout(currentLayout);
@@ -71,10 +79,21 @@ public class AdvertisementDatabase {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setSize(1000, 800);
+		frame.setSize(1000, 600);
 		frame.setLocationRelativeTo(null);
 		//frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (InstantiationException e1) {
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			e1.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e1) {
+			e1.printStackTrace();
+		}
 
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -83,9 +102,11 @@ public class AdvertisementDatabase {
 		menuBar.add(mnFile);
 
 		JMenu mnNew = new JMenu("New");
+		mnNew.setPreferredSize(new Dimension(150, 22));
 		mnFile.add(mnNew);
 
 		JMenuItem mntmBusiness = new JMenuItem("Business");
+		mntmBusiness.setPreferredSize(new Dimension(150, 22));
 		mntmBusiness.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				openLayout(Layout.NEW_BUSINESS);
@@ -143,7 +164,7 @@ public class AdvertisementDatabase {
 		monthLayout.getComponents().add(panelMonth);
 
 		//New business panel
-		panelNewBusiness = new PanelNewBusiness();
+		panelNewBusiness = new PanelNewBusiness(this);
 		panelNewBusiness.setBounds(6, 39, 988, 711);
 		frame.getContentPane().add(panelNewBusiness);
 
@@ -161,6 +182,12 @@ public class AdvertisementDatabase {
 			for(JComponent comp : monthLayout.getComponents()) {
 				comp.setVisible(false);
 			}
+			
+			for(JComponent comp : newBusinessLayout.getComponents()) {
+				comp.setVisible(false);
+			}
+			
+			panelBusiness.updatePanel();
 		}
 
 
@@ -172,6 +199,10 @@ public class AdvertisementDatabase {
 			for(JComponent comp : businessLayout.getComponents()) {
 				comp.setVisible(false);
 			}
+			
+			for(JComponent comp : newBusinessLayout.getComponents()) {
+				comp.setVisible(false);
+			}
 		}
 
 		if (currentLayout == Layout.NEW_BUSINESS) {
@@ -179,27 +210,21 @@ public class AdvertisementDatabase {
 				comp.setVisible(true);
 			}
 
-			for(JComponent comp : newBusinessLayout.getComponents()) {
+			for(JComponent comp : businessLayout.getComponents()) {
+				comp.setVisible(false);
+			}
+			
+			for(JComponent comp : monthLayout.getComponents()) {
 				comp.setVisible(false);
 			}
 		}
 	}
 
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
+	/*public Data getData() {
+		return data;
 	}
+
+	public void setData(Data data) {
+		this.data = data;
+	}*/
 }

@@ -1,3 +1,4 @@
+package database.main;
 
 public class Business {
 	private String name, address, city, state, zip, phone, email;
@@ -16,6 +17,10 @@ public class Business {
 		this.zip = zip;
 		this.phone = phone;
 		this.email = email;
+	}
+	
+	public String toString() {
+		return "Name: " + name + " Address: " + address + " City: " + city + " State: " + state + " ZIP: " + zip + " Phone: " + phone + " Email: " + email;
 	}
 
 	public String getName() {
