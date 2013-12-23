@@ -1,9 +1,11 @@
-package main;
+package panel;
 
-import javax.swing.JPanel;
-import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
+import net.miginfocom.swing.MigLayout;
+
+@SuppressWarnings("serial")
 public class PanelMonth extends JPanel {
 
 	/**
@@ -11,7 +13,7 @@ public class PanelMonth extends JPanel {
 	 */
 	public PanelMonth() {
 		setLayout(new MigLayout("", "[]", "[]"));
-		
+
 		JLabel lblMonth = new JLabel("Month");
 		add(lblMonth, "cell 0 0");
 

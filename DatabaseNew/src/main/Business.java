@@ -6,24 +6,6 @@ public class Business {
 	private String name, address, city, state, zip, phone, email;
 	private ArrayList<Advertisement> advertisements;
 
-	public Business() {
-		
-	}
-
-	public Business(String name, String address, String city, String state,
-			String zip, String phone, String email) {
-		super();
-		this.name = name;
-		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
-		this.phone = phone;
-		this.email = email;
-		
-		setAdvertisements(new ArrayList<Advertisement>());
-	}
-
 	public Business(String[] arguments) {
 		super();
 		this.name = arguments[0];
@@ -33,8 +15,23 @@ public class Business {
 		this.zip = arguments[4];
 		this.phone = arguments[5];
 		this.email = arguments[6];
-		
+
 		setAdvertisements(new ArrayList<Advertisement>());
+
+		if (arguments.length > 7) {
+			String[] adList = new String[] {};
+			adList = arguments[7].split("ad:");
+
+			for (String s : adList) {
+				if (!s.equals("<ads>")) {
+					int date = Character.getNumericValue(s.charAt(0));
+					int size = Character.getNumericValue(s.charAt(1));
+					int price = Character.getNumericValue(s.charAt(2));
+					advertisements.add(new Advertisement(date, size, price,
+							true));
+				}
+			}
+		}
 	}
 
 	public Business(String[] arguments, ArrayList<Advertisement> ads) {
@@ -46,13 +43,12 @@ public class Business {
 		this.zip = arguments[4];
 		this.phone = arguments[5];
 		this.email = arguments[6];
-		
+
 		setAdvertisements(ads);
-		System.out.println(this.getAdvertisements().toString());
 	}
 
 	public String formatNull(String s) {
-		if(s.equals("")) {
+		if (s.equals("")) {
 			return "<NULL>";
 		}
 
@@ -60,14 +56,27 @@ public class Business {
 	}
 
 	public String toString() {
-		return "Name: " + name + " Address: " + address + " City: " + city + " State: " + state + " ZIP: " + zip + " Phone: " + phone + " Email: " + email;
+		return "Name: " + name + " Address: " + address + " City: " + city
+				+ " State: " + state + " ZIP: " + zip + " Phone: " + phone
+				+ " Email: " + email;
 	}
 
 	public String toCSV() {
 		String delimiter = ",";
 		String newline = "\r\n";
-		return formatNull(name) + delimiter + formatNull(address) + delimiter + formatNull(city) + delimiter
-				+ formatNull(state) + delimiter + formatNull(zip) + delimiter + formatNull(phone) + delimiter + formatNull(email) + newline;
+
+		String adString = "<ads>";
+		for (Advertisement ad : advertisements) {
+			adString += "ad:";
+			adString += ad.getDate();
+			adString += ad.getSize();
+			adString += ad.getPrice();
+		}
+
+		return formatNull(name) + delimiter + formatNull(address) + delimiter
+				+ formatNull(city) + delimiter + formatNull(state) + delimiter
+				+ formatNull(zip) + delimiter + formatNull(phone) + delimiter
+				+ formatNull(email) + delimiter + adString + newline;
 	}
 
 	public String getName() {
