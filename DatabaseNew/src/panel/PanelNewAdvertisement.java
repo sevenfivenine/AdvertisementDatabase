@@ -17,6 +17,7 @@ import net.miginfocom.swing.MigLayout;
 public class PanelNewAdvertisement extends JPanel {
 	private boolean isEnabled;
 	private int index;
+	private JCheckBox chckbxEnabled;
 	private JComboBox<String> sizeBox, priceBox, paidBox;
 
 	/**
@@ -26,7 +27,7 @@ public class PanelNewAdvertisement extends JPanel {
 		index = i;
 		setLayout(new MigLayout("", "[][][]", "[][][][]"));
 
-		JCheckBox chckbxEnabled = new JCheckBox();
+		chckbxEnabled = new JCheckBox();
 		chckbxEnabled.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				isEnabled = !isEnabled;
@@ -96,6 +97,14 @@ public class PanelNewAdvertisement extends JPanel {
 
 	public void setIndex(int index) {
 		this.index = index;
+	}
+
+	public JCheckBox getChckbxEnabled() {
+		return chckbxEnabled;
+	}
+
+	public void setChckbxEnabled(JCheckBox chckbxEnabled) {
+		this.chckbxEnabled = chckbxEnabled;
 	}
 
 }

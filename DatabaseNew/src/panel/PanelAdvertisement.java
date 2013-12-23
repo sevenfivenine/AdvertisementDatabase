@@ -44,25 +44,31 @@ public class PanelAdvertisement extends JPanel {
 	}
 
 	public void update() {
-		Business currentBusiness = DataHandler.businessList
-				.get(DataHandler.currentBusiness);
+		try {
+			Business currentBusiness = DataHandler.businessList
+					.get(DataHandler.currentBusinessIndex);
 
-		if (!currentBusiness.getAdvertisements().isEmpty()) {
-			Advertisement panelAd = null;
+			if (!currentBusiness.getAdvertisements().isEmpty()) {
+				Advertisement panelAd = null;
 
-			for (Advertisement ad : currentBusiness.getAdvertisements()) {
-				if (ad.getDate() == index) {
-					panelAd = ad;
+				for (Advertisement ad : currentBusiness.getAdvertisements()) {
+					if (ad.getDate() == index) {
+						panelAd = ad;
+					}
 				}
-			}
 
-			if (panelAd != null) {
-				lblSizeField.setText(Advertisement.SIZES[panelAd.getSize()]);
-				lblPriceField.setText(Advertisement.PRICES[panelAd.getPrice()]);
+				if (panelAd != null) {
+					lblSizeField
+							.setText(Advertisement.SIZES[panelAd.getSize()]);
+					lblPriceField.setText(Advertisement.PRICES[panelAd
+							.getPrice()]);
+				}
+			} else {
+				lblSizeField.setText("null");
+				lblPriceField.setText("null");
 			}
-		} else {
-			lblSizeField.setText("null");
-			lblPriceField.setText("null");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

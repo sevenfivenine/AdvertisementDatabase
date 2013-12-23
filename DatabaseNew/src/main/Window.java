@@ -14,13 +14,15 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import panel.PanelBusiness;
+import panel.PanelEditBusiness;
 import panel.PanelMonth;
 import panel.PanelNewBusiness;
 
 public class Window {
 
 	private JFrame theFrame;
-	private JPanel mainPanel, panelBusiness, panelMonth, panelNewBusiness;
+	private JPanel mainPanel, panelBusiness, panelMonth, panelNewBusiness,
+			panelEditBusiness;
 
 	/**
 	 * Launch the application.
@@ -98,6 +100,9 @@ public class Window {
 		panelNewBusiness = new PanelNewBusiness();
 		mainPanel.add(panelNewBusiness, "New Business");
 
+		panelEditBusiness = new PanelEditBusiness();
+		mainPanel.add(panelEditBusiness, "Edit Business");
+
 	}
 
 	public JFrame getFrame() {
@@ -126,6 +131,14 @@ public class Window {
 
 	public JPanel getPanelNewBusiness() {
 		return panelNewBusiness;
+	}
+
+	public JPanel getPanelEditBusiness() {
+		return panelEditBusiness;
+	}
+
+	public void setPanelEditBusiness(JPanel panelEditBusiness) {
+		this.panelEditBusiness = panelEditBusiness;
 	}
 
 }

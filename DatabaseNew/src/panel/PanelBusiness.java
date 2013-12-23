@@ -68,8 +68,8 @@ public class PanelBusiness extends JPanel {
 						"Are you sure you wish to delete this business?");
 				if (choice == 0) {
 					DataHandler.businessList
-							.remove(DataHandler.currentBusiness);
-					DataHandler.currentBusiness--;
+							.remove(DataHandler.currentBusinessIndex);
+					DataHandler.currentBusinessIndex--;
 					update();
 				}
 			}
@@ -82,7 +82,7 @@ public class PanelBusiness extends JPanel {
 	public void update() {
 		try {
 			Business currentBusiness = DataHandler.businessList
-					.get(DataHandler.currentBusiness);
+					.get(DataHandler.currentBusinessIndex);
 
 			lblBusinessName.setText(currentBusiness.getName());
 			lblAddress.setText(currentBusiness.getAddress());

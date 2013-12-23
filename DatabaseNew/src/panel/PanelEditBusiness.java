@@ -10,20 +10,21 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import main.Advertisement;
+import main.Business;
 import main.DataHandler;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
-public class PanelNewBusiness extends JPanel {
+public class PanelEditBusiness extends JPanel {
 	private JTextField fieldName, fieldAddress, fieldCity, fieldState,
 			fieldZIP, fieldPhone, fieldEmail;
-	private JButton btnAddBusiness;
+	private JButton btnSaveBusiness;
 	private ArrayList<JPanel> adPanels;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelNewBusiness() {
+	public PanelEditBusiness() {
 		setLayout(new MigLayout("", "[][][][][]", "[][][][][][][][][][]"));
 
 		JLabel lblBusinessName = new JLabel("Business Name");
@@ -109,8 +110,8 @@ public class PanelNewBusiness extends JPanel {
 		add(month8, "cell 4 8,grow");
 		adPanels.add(month8);
 
-		btnAddBusiness = new JButton("Add Business");
-		btnAddBusiness.addActionListener(new ActionListener() {
+		btnSaveBusiness = new JButton("Save Business");
+		btnSaveBusiness.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String[] text = new String[] { fieldName.getText(),
 						fieldAddress.getText(), fieldCity.getText(),
@@ -130,10 +131,40 @@ public class PanelNewBusiness extends JPanel {
 
 				}
 
-				DataHandler.addBusiness(text, ads);
+				Business currentBus = DataHandler.businessList
+						.get(DataHandler.currentBusinessIndex);
+				currentBus.setInfo(text);
+				currentBus.setAdvertisements(ads);
 			}
 		});
-		add(btnAddBusiness, "cell 1 9");
+		add(btnSaveBusiness, "cell 1 9");
+
+		update();
 	}
 
+	public void update() {
+		Business currentBusiness = DataHandler.businessList
+				.get(DataHandler.currentBusinessIndex);
+		fieldName.setText(currentBusiness.getName());
+		fieldAddress.setText(currentBusiness.getAddress());
+		fieldCity.setText(currentBusiness.getCity());
+		fieldState.setText(currentBusiness.getState());
+		fieldZIP.setText(currentBusiness.getZip());
+		fieldPhone.setText(currentBusiness.getPhone());
+		fieldEmail.setText(currentBusiness.getEmail());
+
+		for (JPanel p : adPanels) {
+			PanelNewAdvertisement adPanel = (PanelNewAdvertisement) p;
+
+			for (Advertisement ad : currentBusiness.getAdvertisements()) {
+				if (adPanel.getIndex() == ad.getDate()) {
+					adPanel.setEnabled(true);
+					adPanel.getChckbxEnabled().setSelected(true);
+					adPanel.getSizeBox().setSelectedIndex(ad.getSize());
+					adPanel.getPriceBox().setSelectedIndex(ad.getPrice());
+					adPanel.update();
+				}
+			}
+		}
+	}
 }

@@ -8,7 +8,11 @@ import java.util.ArrayList;
 
 public class DataHandler {
 	public static ArrayList<Business> businessList = new ArrayList<Business>();
-	public static int currentBusiness;
+	public static int currentBusinessIndex;
+	/*
+	 * public static Business currentBusiness = businessList
+	 * .get(currentBusinessIndex);
+	 */
 	private static FileWriter writer;
 	private static BufferedReader reader;
 
@@ -21,14 +25,14 @@ public class DataHandler {
 	}
 
 	public static void previousBusiness() {
-		if (currentBusiness > 0) {
-			currentBusiness--;
+		if (currentBusinessIndex > 0) {
+			currentBusinessIndex--;
 		}
 	}
 
 	public static void nextBusiness() {
-		if (currentBusiness < businessList.size() - 1) {
-			currentBusiness++;
+		if (currentBusinessIndex < businessList.size() - 1) {
+			currentBusinessIndex++;
 		}
 	}
 
@@ -44,6 +48,8 @@ public class DataHandler {
 				businessList.add(new Business(arguments));
 			}
 
+		} catch (IOException e) {
+			e.printStackTrace();
 		} finally {
 			if (reader != null) {
 				reader.close();

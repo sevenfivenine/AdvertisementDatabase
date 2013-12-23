@@ -79,6 +79,16 @@ public class Business {
 				+ formatNull(email) + delimiter + adString + newline;
 	}
 
+	public void setInfo(String[] arguments) {
+		this.name = arguments[0];
+		this.address = arguments[1];
+		this.city = arguments[2];
+		this.state = arguments[3];
+		this.zip = arguments[4];
+		this.phone = arguments[5];
+		this.email = arguments[6];
+	}
+
 	public String getName() {
 		return name;
 	}
