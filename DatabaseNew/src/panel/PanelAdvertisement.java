@@ -45,8 +45,7 @@ public class PanelAdvertisement extends JPanel {
 
 	public void update() {
 		try {
-			Business currentBusiness = DataHandler.businessList
-					.get(DataHandler.currentBusinessIndex);
+			Business currentBusiness = DataHandler.getCurrentBusiness();
 
 			if (!currentBusiness.getAdvertisements().isEmpty()) {
 				Advertisement panelAd = null;
@@ -62,6 +61,9 @@ public class PanelAdvertisement extends JPanel {
 							.setText(Advertisement.SIZES[panelAd.getSize()]);
 					lblPriceField.setText(Advertisement.PRICES[panelAd
 							.getPrice()]);
+				} else {
+					lblSizeField.setText("null");
+					lblPriceField.setText("null");
 				}
 			} else {
 				lblSizeField.setText("null");

@@ -97,10 +97,10 @@ public class Window {
 		panelMonth = new PanelMonth();
 		mainPanel.add(panelMonth, "Month");
 
-		panelNewBusiness = new PanelNewBusiness();
+		panelNewBusiness = new PanelNewBusiness(this);
 		mainPanel.add(panelNewBusiness, "New Business");
 
-		panelEditBusiness = new PanelEditBusiness();
+		panelEditBusiness = new PanelEditBusiness(this);
 		mainPanel.add(panelEditBusiness, "Edit Business");
 
 	}

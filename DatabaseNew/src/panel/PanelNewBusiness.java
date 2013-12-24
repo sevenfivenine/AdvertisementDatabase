@@ -1,5 +1,6 @@
 package panel;
 
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import javax.swing.JTextField;
 
 import main.Advertisement;
 import main.DataHandler;
+import main.Window;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
@@ -23,7 +25,8 @@ public class PanelNewBusiness extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelNewBusiness() {
+	public PanelNewBusiness(Window w) {
+		final Window window = w;
 		setLayout(new MigLayout("", "[][][][][]", "[][][][][][][][][][]"));
 
 		JLabel lblBusinessName = new JLabel("Business Name");
@@ -131,6 +134,10 @@ public class PanelNewBusiness extends JPanel {
 				}
 
 				DataHandler.addBusiness(text, ads);
+
+				CardLayout cl = (CardLayout) (getParent().getLayout());
+				cl.show(getParent(), "Business");
+				((PanelBusiness) window.getPanelBusiness()).update();
 			}
 		});
 		add(btnAddBusiness, "cell 1 9");

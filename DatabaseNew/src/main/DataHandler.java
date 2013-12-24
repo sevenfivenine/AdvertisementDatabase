@@ -9,10 +9,6 @@ import java.util.ArrayList;
 public class DataHandler {
 	public static ArrayList<Business> businessList = new ArrayList<Business>();
 	public static int currentBusinessIndex;
-	/*
-	 * public static Business currentBusiness = businessList
-	 * .get(currentBusinessIndex);
-	 */
 	private static FileWriter writer;
 	private static BufferedReader reader;
 
@@ -22,6 +18,10 @@ public class DataHandler {
 
 	public static void addBusiness(String[] text, ArrayList<Advertisement> ads) {
 		businessList.add(new Business(text, ads));
+	}
+
+	public static Business getCurrentBusiness() {
+		return businessList.get(currentBusinessIndex);
 	}
 
 	public static void previousBusiness() {

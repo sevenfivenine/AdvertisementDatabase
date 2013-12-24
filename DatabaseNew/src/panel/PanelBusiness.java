@@ -81,8 +81,7 @@ public class PanelBusiness extends JPanel {
 
 	public void update() {
 		try {
-			Business currentBusiness = DataHandler.businessList
-					.get(DataHandler.currentBusinessIndex);
+			Business currentBusiness = DataHandler.getCurrentBusiness();
 
 			lblBusinessName.setText(currentBusiness.getName());
 			lblAddress.setText(currentBusiness.getAddress());

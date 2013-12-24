@@ -1,5 +1,6 @@
 package panel;
 
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import javax.swing.JTextField;
 import main.Advertisement;
 import main.Business;
 import main.DataHandler;
+import main.Window;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
@@ -24,7 +26,9 @@ public class PanelEditBusiness extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelEditBusiness() {
+	public PanelEditBusiness(Window w) {
+		final Window window = w;
+
 		setLayout(new MigLayout("", "[][][][][]", "[][][][][][][][][][]"));
 
 		JLabel lblBusinessName = new JLabel("Business Name");
@@ -131,10 +135,13 @@ public class PanelEditBusiness extends JPanel {
 
 				}
 
-				Business currentBus = DataHandler.businessList
-						.get(DataHandler.currentBusinessIndex);
+				Business currentBus = DataHandler.getCurrentBusiness();
 				currentBus.setInfo(text);
 				currentBus.setAdvertisements(ads);
+
+				CardLayout cl = (CardLayout) (getParent().getLayout());
+				cl.show(getParent(), "Business");
+				((PanelBusiness) window.getPanelBusiness()).update();
 			}
 		});
 		add(btnSaveBusiness, "cell 1 9");
@@ -143,8 +150,7 @@ public class PanelEditBusiness extends JPanel {
 	}
 
 	public void update() {
-		Business currentBusiness = DataHandler.businessList
-				.get(DataHandler.currentBusinessIndex);
+		Business currentBusiness = DataHandler.getCurrentBusiness();
 		fieldName.setText(currentBusiness.getName());
 		fieldAddress.setText(currentBusiness.getAddress());
 		fieldCity.setText(currentBusiness.getCity());
