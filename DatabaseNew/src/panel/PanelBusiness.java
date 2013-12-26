@@ -1,5 +1,6 @@
 package panel;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,6 +21,7 @@ import javax.swing.border.LineBorder;
 
 import main.Business;
 import main.DataHandler;
+import main.Window;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
@@ -28,13 +31,16 @@ public class PanelBusiness extends JPanel {
 	private JButton mbutton;
 	private ArrayList<JPanel> adPanels;
 	private PanelContract panelContract;
+	private JButton mbutton_1;
+	private JEditorPane notePane;
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelBusiness() {
-		setLayout(new MigLayout("", "[][][][][grow]",
-				"[][][][][grow][grow][grow]"));
+	public PanelBusiness(Window w) {
+		final Window window = w;
+		setLayout(new MigLayout("", "[grow][grow][grow][][grow]",
+				"[][][][][][][grow]"));
 
 		lblBusinessName = new JLabel("Business Name");
 		lblBusinessName.setFont(new Font("Segoe WP SemiLight", Font.PLAIN, 36));
@@ -72,12 +78,12 @@ public class PanelBusiness extends JPanel {
 		add(month4, "cell 3 4,grow");
 		adPanels.add(month4);
 
-		int panelContractWidth = 300;
+		int panelContractWidth = 290;
 		panelContract = new PanelContract();
 		panelContract.setPreferredSize(new Dimension(panelContractWidth,
 				(int) (1.3 * panelContractWidth)));
 		panelContract.setBorder(new LineBorder(new Color(0, 0, 0)));
-		add(panelContract, "cell 4 4 1 2,alignx center,aligny center");
+		add(panelContract, "cell 4 4 1 3,alignx center,aligny center");
 
 		JPanel month5 = new PanelAdvertisement(4);
 		add(month5, "cell 0 5,grow");
@@ -94,21 +100,6 @@ public class PanelBusiness extends JPanel {
 		JPanel month8 = new PanelAdvertisement(7);
 		add(month8, "cell 3 5,grow");
 		adPanels.add(month8);
-
-		mbutton = new JButton("Delete Record");
-		mbutton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int choice = JOptionPane.showConfirmDialog(null,
-						"Are you sure you wish to delete this business?");
-				if (choice == 0) {
-					DataHandler.businessList
-							.remove(DataHandler.currentBusinessIndex);
-					DataHandler.currentBusinessIndex--;
-					update();
-				}
-			}
-		});
-		add(mbutton, "cell 3 6,alignx right");
 
 		lblState = new JLabel("State");
 		add(lblState, "cell 0 2");
@@ -137,7 +128,41 @@ public class PanelBusiness extends JPanel {
 				}
 			}
 		});
-		add(btnUploadContract, "cell 4 6");
+
+		mbutton = new JButton("Delete Record");
+		mbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int choice = JOptionPane.showConfirmDialog(null,
+						"Are you sure you wish to delete this business?");
+				if (choice == 0) {
+					DataHandler.businessList
+							.remove(DataHandler.currentBusinessIndex);
+					DataHandler.currentBusinessIndex--;
+					update();
+				}
+			}
+		});
+		add(mbutton, "flowx,cell 4 6,alignx center,aligny bottom");
+
+		JLabel lblNotes = new JLabel("Notes:");
+		add(lblNotes, "flowy,cell 0 6 4 1");
+
+		notePane = new JEditorPane();
+		notePane.setBorder(new LineBorder(new Color(0, 0, 0)));
+		notePane.setMinimumSize(new Dimension(500, 200));
+		notePane.setText("Notes");
+		add(notePane, "cell 0 6,alignx left,aligny center");
+
+		JButton btnEdit = new JButton("Edit Business");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout) (getParent().getLayout());
+				cl.show(getParent(), "Edit Business");
+				((PanelEditBusiness) window.getPanelEditBusiness()).update();
+			}
+		});
+		add(btnEdit, "cell 4 6,alignx center,aligny bottom");
+		add(btnUploadContract, "cell 4 6,aligny bottom");
 
 		update();
 	}
@@ -153,6 +178,7 @@ public class PanelBusiness extends JPanel {
 			lblZip.setText(currentBusiness.getZip());
 			lblPhone.setText(currentBusiness.getPhone());
 			lblEmail.setText(currentBusiness.getEmail());
+			notePane.setText(currentBusiness.getNotes());
 
 			panelContract.setImage(currentBusiness.getContractImage());
 			panelContract.repaint();

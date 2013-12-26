@@ -144,7 +144,17 @@ public class PanelEditBusiness extends JPanel {
 				((PanelBusiness) window.getPanelBusiness()).update();
 			}
 		});
-		add(btnSaveBusiness, "cell 1 9");
+		add(btnSaveBusiness, "flowx,cell 1 9 2 1");
+
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout) (getParent().getLayout());
+				cl.show(getParent(), "Business");
+				((PanelBusiness) window.getPanelBusiness()).update();
+			}
+		});
+		add(btnCancel, "cell 1 9");
 
 		update();
 	}

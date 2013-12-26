@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import panel.PanelBusiness;
-import panel.PanelEditBusiness;
 
 @SuppressWarnings("serial")
 public class ToolBar extends JToolBar {
@@ -68,15 +67,5 @@ public class ToolBar extends JToolBar {
 			}
 		});
 		add(btnNext);
-
-		JButton btnEdit = new JButton("Edit");
-		btnEdit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout) (panel.getLayout());
-				cl.show(panel, "Edit Business");
-				((PanelEditBusiness) window.getPanelEditBusiness()).update();
-			}
-		});
-		add(btnEdit);
 	}
 }

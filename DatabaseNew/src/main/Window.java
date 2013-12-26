@@ -91,7 +91,7 @@ public class Window {
 		JToolBar toolBar = new ToolBar(mainPanel, this);
 		theFrame.getContentPane().add(toolBar, BorderLayout.NORTH);
 
-		panelBusiness = new PanelBusiness();
+		panelBusiness = new PanelBusiness(this);
 		mainPanel.add(panelBusiness, "Business");
 
 		panelMonth = new PanelMonth();

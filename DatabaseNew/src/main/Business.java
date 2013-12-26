@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 public class Business {
-	private String name, address, city, state, zip, phone, email;
+	private String name, address, city, state, zip, phone, email, notes;
 	private ArrayList<Advertisement> advertisements;
 	private Image contractImage;
 
@@ -21,10 +21,11 @@ public class Business {
 		this.zip = arguments[4];
 		this.phone = arguments[5];
 		this.email = arguments[6];
+		this.notes = arguments[7];
 
-		if (!arguments[7].equals("<NO IMAGE>")) {
+		if (!arguments[8].equals("<NO IMAGE>")) {
 			try {
-				BufferedImage img = ImageIO.read(new File(arguments[7]));
+				BufferedImage img = ImageIO.read(new File(arguments[8]));
 				this.contractImage = img;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -33,9 +34,9 @@ public class Business {
 
 		setAdvertisements(new ArrayList<Advertisement>());
 
-		if (arguments.length > 8) {
+		if (arguments.length > 9) {
 			String[] adList = new String[] {};
-			adList = arguments[8].split("ad:");
+			adList = arguments[9].split("ad:");
 
 			for (String s : adList) {
 				if (!s.equals("<ads>")) {
@@ -99,8 +100,8 @@ public class Business {
 		return formatNull(name) + delimiter + formatNull(address) + delimiter
 				+ formatNull(city) + delimiter + formatNull(state) + delimiter
 				+ formatNull(zip) + delimiter + formatNull(phone) + delimiter
-				+ formatNull(email) + delimiter + formatNull(contractImage)
-				+ delimiter + adString + newline;
+				+ formatNull(email) + delimiter + formatNull(notes) + delimiter
+				+ formatNull(contractImage) + delimiter + adString + newline;
 	}
 
 	public void setInfo(String[] arguments) {
@@ -167,6 +168,14 @@ public class Business {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 	public ArrayList<Advertisement> getAdvertisements() {

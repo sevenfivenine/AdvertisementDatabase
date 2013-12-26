@@ -62,12 +62,12 @@ public class PanelAdvertisement extends JPanel {
 					lblPriceField.setText(Advertisement.PRICES[panelAd
 							.getPrice()]);
 				} else {
-					lblSizeField.setText("null");
-					lblPriceField.setText("null");
+					lblSizeField.setText("--");
+					lblPriceField.setText("--");
 				}
 			} else {
-				lblSizeField.setText("null");
-				lblPriceField.setText("null");
+				lblSizeField.setText("--");
+				lblPriceField.setText("--");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
