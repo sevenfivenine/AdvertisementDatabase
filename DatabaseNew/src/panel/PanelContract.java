@@ -13,14 +13,27 @@ public class PanelContract extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PanelContract(Image i) {
-		image = i;
+	public PanelContract() {
+
 	}
 
 	@Override
-	public void paintComponents(Graphics g) {
-		super.paintComponents(g);
-		g.drawImage(image, 0, 0, null);
+	public void paint(Graphics g) {
+		super.paint(g);
+		if (image != null) {
+			g.drawImage(
+					image.getScaledInstance(this.getWidth() - 2,
+							this.getHeight() - 2, Image.SCALE_SMOOTH), 1, 1,
+					null);
+		}
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 }

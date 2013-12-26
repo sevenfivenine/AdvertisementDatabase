@@ -1,10 +1,16 @@
 package main;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 public class Business {
 	private String name, address, city, state, zip, phone, email;
 	private ArrayList<Advertisement> advertisements;
+	private Image contractImage;
 
 	public Business(String[] arguments) {
 		super();
@@ -16,11 +22,20 @@ public class Business {
 		this.phone = arguments[5];
 		this.email = arguments[6];
 
+		if (!arguments[7].equals("<NO IMAGE>")) {
+			try {
+				BufferedImage img = ImageIO.read(new File(arguments[7]));
+				this.contractImage = img;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		setAdvertisements(new ArrayList<Advertisement>());
 
-		if (arguments.length > 7) {
+		if (arguments.length > 8) {
 			String[] adList = new String[] {};
-			adList = arguments[7].split("ad:");
+			adList = arguments[8].split("ad:");
 
 			for (String s : adList) {
 				if (!s.equals("<ads>")) {
@@ -55,6 +70,14 @@ public class Business {
 		return s;
 	}
 
+	private String formatNull(Image img) {
+		if (img == null) {
+			return "<NO IMAGE>";
+		}
+
+		return formatNull(name) + ".png";
+	}
+
 	public String toString() {
 		return "Name: " + name + " Address: " + address + " City: " + city
 				+ " State: " + state + " ZIP: " + zip + " Phone: " + phone
@@ -76,7 +99,8 @@ public class Business {
 		return formatNull(name) + delimiter + formatNull(address) + delimiter
 				+ formatNull(city) + delimiter + formatNull(state) + delimiter
 				+ formatNull(zip) + delimiter + formatNull(phone) + delimiter
-				+ formatNull(email) + delimiter + adString + newline;
+				+ formatNull(email) + delimiter + formatNull(contractImage)
+				+ delimiter + adString + newline;
 	}
 
 	public void setInfo(String[] arguments) {
@@ -151,6 +175,14 @@ public class Business {
 
 	public void setAdvertisements(ArrayList<Advertisement> advertisements) {
 		this.advertisements = advertisements;
+	}
+
+	public Image getContractImage() {
+		return contractImage;
+	}
+
+	public void setContractImage(Image contractImage) {
+		this.contractImage = contractImage;
 	}
 
 }

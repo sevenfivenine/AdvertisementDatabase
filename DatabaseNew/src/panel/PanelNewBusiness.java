@@ -80,6 +80,8 @@ public class PanelNewBusiness extends JPanel {
 
 		adPanels = new ArrayList<JPanel>();
 
+		// Do not use loop to initialize these, as they will not show up in
+		// design pane
 		JPanel month1 = new PanelNewAdvertisement(0);
 		add(month1, "cell 1 7,grow");
 		adPanels.add(month1);
