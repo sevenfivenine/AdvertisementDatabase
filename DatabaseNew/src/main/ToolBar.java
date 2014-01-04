@@ -49,23 +49,5 @@ public class ToolBar extends JToolBar {
 			}
 		});
 		add(btnNewBusiness);
-
-		JButton btnPrevious = new JButton("Previous");
-		btnPrevious.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DataHandler.previousBusiness();
-				((PanelBusiness) window.getPanelBusiness()).update();
-			}
-		});
-		add(btnPrevious);
-
-		JButton btnNext = new JButton("Next");
-		btnNext.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DataHandler.nextBusiness();
-				((PanelBusiness) window.getPanelBusiness()).update();
-			}
-		});
-		add(btnNext);
 	}
 }

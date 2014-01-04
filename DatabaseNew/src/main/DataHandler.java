@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class DataHandler {
 	public static ArrayList<Business> businessList = new ArrayList<Business>();
 	public static int currentBusinessIndex;
+	public static int currentMonth;
 	private static FileWriter writer;
 	private static BufferedReader reader;
 

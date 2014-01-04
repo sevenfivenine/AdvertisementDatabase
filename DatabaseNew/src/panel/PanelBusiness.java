@@ -33,6 +33,8 @@ public class PanelBusiness extends JPanel {
 	private PanelContract panelContract;
 	private JButton mbutton_1;
 	private JEditorPane notePane;
+	private JButton btnPreviousBusiness;
+	private JButton btnNextBusiness;
 
 	/**
 	 * Create the panel.
@@ -60,6 +62,15 @@ public class PanelBusiness extends JPanel {
 
 		adPanels = new ArrayList<JPanel>();
 
+		btnPreviousBusiness = new JButton("Previous Business");
+		btnPreviousBusiness.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DataHandler.previousBusiness();
+				((PanelBusiness) window.getPanelBusiness()).update();
+			}
+		});
+		add(btnPreviousBusiness, "flowx,cell 4 3,alignx center");
+
 		// Do not use loop to initialize these, as they will not show up in
 		// design pane
 		JPanel month1 = new PanelAdvertisement(0);
@@ -83,7 +94,7 @@ public class PanelBusiness extends JPanel {
 		panelContract.setPreferredSize(new Dimension(panelContractWidth,
 				(int) (1.3 * panelContractWidth)));
 		panelContract.setBorder(new LineBorder(new Color(0, 0, 0)));
-		add(panelContract, "cell 4 4 1 3,alignx center,aligny center");
+		add(panelContract, "cell 4 4 1 3,alignx center,aligny top");
 
 		JPanel month5 = new PanelAdvertisement(4);
 		add(month5, "cell 0 5,grow");
@@ -151,7 +162,7 @@ public class PanelBusiness extends JPanel {
 		notePane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		notePane.setMinimumSize(new Dimension(500, 200));
 		notePane.setText("Notes");
-		add(notePane, "cell 0 6,alignx left,aligny center");
+		add(notePane, "cell 0 6 4 1,alignx left,aligny center");
 
 		JButton btnEdit = new JButton("Edit Business");
 		btnEdit.addActionListener(new ActionListener() {
@@ -163,6 +174,15 @@ public class PanelBusiness extends JPanel {
 		});
 		add(btnEdit, "cell 4 6,alignx center,aligny bottom");
 		add(btnUploadContract, "cell 4 6,aligny bottom");
+
+		btnNextBusiness = new JButton("Next Business");
+		btnNextBusiness.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DataHandler.nextBusiness();
+				((PanelBusiness) window.getPanelBusiness()).update();
+			}
+		});
+		add(btnNextBusiness, "cell 4 3,alignx center");
 
 		update();
 	}

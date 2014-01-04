@@ -64,7 +64,7 @@ public class Business {
 	}
 
 	public String formatNull(String s) {
-		if (s.equals("")) {
+		if (s == null || s.equals("")) {
 			return "<NULL>";
 		}
 
