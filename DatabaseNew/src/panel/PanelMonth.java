@@ -28,50 +28,15 @@ public class PanelMonth extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelMonth() {
-		setLayout(new MigLayout("", "[grow]", "[][grow]"));
+		setLayout(new MigLayout("", "[grow][]", "[][grow]"));
 
 		lblMonthName = new JLabel("Month Name");
 		lblMonthName.setFont(new Font("Tahoma", Font.PLAIN,
 				Format.FONT_SIZE_LARGE));
-		add(lblMonthName, "flowx,cell 0 0");
+		add(lblMonthName, "flowx,cell 0 0,alignx left");
 
 		String[] columnNames = { "Business Name", "Size", "Price" };
 		Object[][] data = new Object[60][3];
-
-		for (int i = 0; i < DataHandler.businessList.size(); i++) {
-			Business currentBusiness = DataHandler.businessList.get(i);
-			int currentMonth = DataHandler.currentMonth;
-
-			data[i][0] = currentBusiness.getName();
-
-			if (!currentBusiness.getAdvertisements().isEmpty()) {
-				Advertisement currentAd = null;
-
-				for (Advertisement ad : currentBusiness.getAdvertisements()) {
-					if (ad.getDate() == currentMonth) {
-						currentAd = ad;
-					}
-				}
-
-				if (currentAd != null) {
-					data[i][1] = Advertisement.SIZES[currentAd.getSize()];
-					data[i][2] = Advertisement.PRICES[currentAd.getPrice()];
-				} else {
-					data[i][1] = "";
-					data[i][2] = "";
-				}
-			} else {
-				data[i][1] = "";
-				data[i][2] = "";
-			}
-		}
-
-		mtable = new JTable(data, columnNames);
-
-		scrollPane = new JScrollPane(mtable);
-		mtable.setFillsViewportHeight(true);
-
-		add(scrollPane, "cell 0 1,grow");
 
 		mcomboBox = new JComboBox<String>();
 		mcomboBox.addActionListener(new ActionListener() {
@@ -85,7 +50,13 @@ public class PanelMonth extends JPanel {
 		});
 		mcomboBox.setModel(new DefaultComboBoxModel<String>(
 				Advertisement.MONTHS));
-		add(mcomboBox, "cell 0 0");
+		add(mcomboBox, "cell 1 0,alignx right,aligny center");
+		mtable = new JTable(data, columnNames);
+
+		scrollPane = new JScrollPane(mtable);
+		mtable.setFillsViewportHeight(true);
+
+		add(scrollPane, "cell 0 1 2 1,grow");
 
 		update();
 	}
@@ -93,13 +64,9 @@ public class PanelMonth extends JPanel {
 	public void update() {
 		lblMonthName.setText(Advertisement.MONTHS[DataHandler.currentMonth]);
 
-		String[] columnNames = { "Business Name", "Size", "Price" };
-		Object[][] data = new Object[60][3];
-
 		for (int i = 0; i < DataHandler.businessList.size(); i++) {
 			Business currentBusiness = DataHandler.businessList.get(i);
 			int currentMonth = DataHandler.currentMonth;
-			data[i][0] = currentBusiness.getName();
 
 			if (!currentBusiness.getAdvertisements().isEmpty()) {
 				Advertisement currentAd = null;
@@ -111,27 +78,22 @@ public class PanelMonth extends JPanel {
 				}
 
 				if (currentAd != null) {
+					mtable.setValueAt(currentBusiness.getName(), i, 0);
 					mtable.setValueAt(Advertisement.SIZES[currentAd.getSize()],
 							i, 1);
 					mtable.setValueAt(
 							Advertisement.PRICES[currentAd.getPrice()], i, 2);
-					// data[i][1] = Advertisement.SIZES[currentAd.getSize()];
-					// data[i][2] = Advertisement.PRICES[currentAd.getPrice()];
 				} else {
+					mtable.setValueAt("", i, 0);
 					mtable.setValueAt("", i, 1);
 					mtable.setValueAt("", i, 2);
 				}
 			} else {
+				mtable.setValueAt("", i, 0);
 				mtable.setValueAt("", i, 1);
 				mtable.setValueAt("", i, 2);
 			}
 		}
-
-		// mtable = new JTable(data, columnNames);
-		// mtable.setValueAt("PENIS", 0, 0);
-
-		// scrollPane = new JScrollPane(mtable);
-		// mtable.setFillsViewportHeight(true);
 	}
 
 }
