@@ -3,11 +3,16 @@ package main;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
@@ -23,6 +28,11 @@ public class Window {
 	private JFrame theFrame;
 	private JPanel mainPanel, panelBusiness, panelMonth, panelNewBusiness,
 			panelEditBusiness;
+	private JMenuBar menuBar;
+	private JMenu mnFile;
+	private JMenu mnEdit;
+	private JMenu mnHelp;
+	private JMenuItem mntmPrint;
 
 	/**
 	 * Launch the application.
@@ -102,6 +112,27 @@ public class Window {
 
 		panelEditBusiness = new PanelEditBusiness(this);
 		mainPanel.add(panelEditBusiness, "Edit Business");
+
+		// Menu
+		menuBar = new JMenuBar();
+		theFrame.setJMenuBar(menuBar);
+
+		mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+
+		mntmPrint = new JMenuItem("Print");
+		mntmPrint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PrintHandler.printTest(mainPanel);
+			}
+		});
+		mnFile.add(mntmPrint);
+
+		mnEdit = new JMenu("Edit");
+		menuBar.add(mnEdit);
+
+		mnHelp = new JMenu("Help");
+		menuBar.add(mnHelp);
 
 	}
 
