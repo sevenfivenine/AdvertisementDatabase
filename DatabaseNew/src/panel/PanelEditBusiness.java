@@ -160,27 +160,31 @@ public class PanelEditBusiness extends JPanel {
 	}
 
 	public void update() {
-		Business currentBusiness = DataHandler.getCurrentBusiness();
-		fieldName.setText(currentBusiness.getName());
-		fieldAddress.setText(currentBusiness.getAddress());
-		fieldCity.setText(currentBusiness.getCity());
-		fieldState.setText(currentBusiness.getState());
-		fieldZIP.setText(currentBusiness.getZip());
-		fieldPhone.setText(currentBusiness.getPhone());
-		fieldEmail.setText(currentBusiness.getEmail());
+		try {
+			Business currentBusiness = DataHandler.getCurrentBusiness();
+			fieldName.setText(currentBusiness.getName());
+			fieldAddress.setText(currentBusiness.getAddress());
+			fieldCity.setText(currentBusiness.getCity());
+			fieldState.setText(currentBusiness.getState());
+			fieldZIP.setText(currentBusiness.getZip());
+			fieldPhone.setText(currentBusiness.getPhone());
+			fieldEmail.setText(currentBusiness.getEmail());
 
-		for (JPanel p : adPanels) {
-			PanelNewAdvertisement adPanel = (PanelNewAdvertisement) p;
+			for (JPanel p : adPanels) {
+				PanelNewAdvertisement adPanel = (PanelNewAdvertisement) p;
 
-			for (Advertisement ad : currentBusiness.getAdvertisements()) {
-				if (adPanel.getIndex() == ad.getDate()) {
-					adPanel.setEnabled(true);
-					adPanel.getChckbxEnabled().setSelected(true);
-					adPanel.getSizeBox().setSelectedIndex(ad.getSize());
-					adPanel.getPriceBox().setSelectedIndex(ad.getPrice());
-					adPanel.update();
+				for (Advertisement ad : currentBusiness.getAdvertisements()) {
+					if (adPanel.getIndex() == ad.getDate()) {
+						adPanel.setEnabled(true);
+						adPanel.getChckbxEnabled().setSelected(true);
+						adPanel.getSizeBox().setSelectedIndex(ad.getSize());
+						adPanel.getPriceBox().setSelectedIndex(ad.getPrice());
+						adPanel.update();
+					}
 				}
 			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 		}
 	}
 }

@@ -22,6 +22,8 @@ public class DataHandler {
 	}
 
 	public static Business getCurrentBusiness() {
+		if(businessList.isEmpty())
+			return null;
 		return businessList.get(currentBusinessIndex);
 	}
 
