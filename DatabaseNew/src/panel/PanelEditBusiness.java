@@ -19,7 +19,7 @@ import net.miginfocom.swing.MigLayout;
 @SuppressWarnings("serial")
 public class PanelEditBusiness extends JPanel {
 	private JTextField fieldName, fieldAddress, fieldCity, fieldState,
-			fieldZIP, fieldPhone, fieldEmail;
+	fieldZIP, fieldPhone, fieldEmail;
 	private JButton btnSaveBusiness;
 	private ArrayList<JPanel> adPanels;
 
@@ -142,6 +142,8 @@ public class PanelEditBusiness extends JPanel {
 				CardLayout cl = (CardLayout) (getParent().getLayout());
 				cl.show(getParent(), "Business");
 				((PanelBusiness) window.getPanelBusiness()).update();
+
+				resetPanel();
 			}
 		});
 		add(btnSaveBusiness, "flowx,cell 1 9 2 1");
@@ -152,6 +154,8 @@ public class PanelEditBusiness extends JPanel {
 				CardLayout cl = (CardLayout) (getParent().getLayout());
 				cl.show(getParent(), "Business");
 				((PanelBusiness) window.getPanelBusiness()).update();
+				
+				resetPanel();
 			}
 		});
 		add(btnCancel, "cell 1 9");
@@ -185,6 +189,16 @@ public class PanelEditBusiness extends JPanel {
 			}
 		} catch (NullPointerException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void resetPanel() {
+		for (JPanel p : adPanels) {
+			PanelNewAdvertisement adPanel = (PanelNewAdvertisement) p;
+			adPanel.setEnabled(false);
+			adPanel.getChckbxEnabled().setSelected(false);
+			adPanel.getSizeBox().setSelectedIndex(0);
+			adPanel.getPriceBox().setSelectedIndex(0);
 		}
 	}
 }
