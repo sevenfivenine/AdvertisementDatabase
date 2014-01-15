@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 
 import main.Advertisement;
 import net.miginfocom.swing.MigLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @SuppressWarnings("serial")
 public class PanelNewAdvertisement extends JPanel {
@@ -28,10 +30,16 @@ public class PanelNewAdvertisement extends JPanel {
 		setLayout(new MigLayout("", "[][][]", "[][][][]"));
 
 		chckbxEnabled = new JCheckBox();
+		chckbxEnabled.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				isEnabled = chckbxEnabled.isSelected();
+				update();
+			}
+		});
 		chckbxEnabled.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				isEnabled = !isEnabled;
-				update();
+
 			}
 		});
 		add(chckbxEnabled, "cell 0 0");
