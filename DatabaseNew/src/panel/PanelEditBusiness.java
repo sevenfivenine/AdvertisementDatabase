@@ -18,8 +18,7 @@ import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
 public class PanelEditBusiness extends JPanel {
-	private JTextField fieldName, fieldAddress, fieldCity, fieldState,
-	fieldZIP, fieldPhone, fieldEmail;
+	private JTextField fieldName, fieldAddress, fieldCity, fieldState, fieldZIP, fieldPhone, fieldEmail;
 	private JButton btnSaveBusiness;
 	private ArrayList<JPanel> adPanels;
 
@@ -117,10 +116,8 @@ public class PanelEditBusiness extends JPanel {
 		btnSaveBusiness = new JButton("Save Business");
 		btnSaveBusiness.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String[] text = new String[] { fieldName.getText(),
-						fieldAddress.getText(), fieldCity.getText(),
-						fieldState.getText(), fieldZIP.getText(),
-						fieldPhone.getText(), fieldEmail.getText() };
+				String[] text = new String[] { fieldName.getText(), fieldAddress.getText(), fieldCity.getText(),
+						fieldState.getText(), fieldZIP.getText(), fieldPhone.getText(), fieldEmail.getText() };
 
 				ArrayList<Advertisement> ads = new ArrayList<Advertisement>();
 
@@ -128,8 +125,7 @@ public class PanelEditBusiness extends JPanel {
 					PanelNewAdvertisement adPanel = (PanelNewAdvertisement) p;
 
 					if (adPanel.isEnabled()) {
-						ads.add(new Advertisement(adPanel.getIndex(), adPanel
-								.getSizeBox().getSelectedIndex(), adPanel
+						ads.add(new Advertisement(adPanel.getIndex(), adPanel.getSizeBox().getSelectedIndex(), adPanel
 								.getPriceBox().getSelectedIndex(), true));
 					}
 
@@ -154,7 +150,7 @@ public class PanelEditBusiness extends JPanel {
 				CardLayout cl = (CardLayout) (getParent().getLayout());
 				cl.show(getParent(), "Business");
 				((PanelBusiness) window.getPanelBusiness()).update();
-				
+
 				resetPanel();
 			}
 		});

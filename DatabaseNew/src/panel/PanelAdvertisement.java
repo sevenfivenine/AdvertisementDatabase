@@ -57,10 +57,8 @@ public class PanelAdvertisement extends JPanel {
 				}
 
 				if (panelAd != null) {
-					lblSizeField
-							.setText(Advertisement.SIZES[panelAd.getSize()]);
-					lblPriceField.setText(Advertisement.PRICES[panelAd
-							.getPrice()]);
+					lblSizeField.setText(Advertisement.SIZES[panelAd.getSize()]);
+					lblPriceField.setText(Advertisement.PRICES[panelAd.getPrice()]);
 				} else {
 					lblSizeField.setText("--");
 					lblPriceField.setText("--");

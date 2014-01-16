@@ -66,8 +66,7 @@ public class PanelNewAdvertisement extends JPanel {
 		add(lblPaid, "cell 1 3,alignx trailing");
 
 		paidBox = new JComboBox<String>();
-		paidBox.setModel(new DefaultComboBoxModel<String>(new String[] { "Yes",
-				"No" }));
+		paidBox.setModel(new DefaultComboBoxModel<String>(new String[] { "Yes", "No" }));
 		add(paidBox, "cell 2 3,growx");
 
 		update();

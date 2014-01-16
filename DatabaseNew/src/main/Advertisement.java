@@ -1,13 +1,10 @@
 package main;
 
 public class Advertisement {
-	public static final String[] MONTHS = new String[] { "September",
-			"October", "November", "December", "January", "February", "March",
-			"April" };
-	public static final String[] SIZES = new String[] { "2x4", "4x2", "4x4",
-			"6x2", "Half Page", "Full Page" };
-	public static final String[] PRICES = new String[] { "$30", "$60", "$45",
-			"$360", "$720" };
+	public static final String[] MONTHS = new String[] { "September", "October", "November", "December", "January",
+			"February", "March", "April" };
+	public static final String[] SIZES = new String[] { "2x4", "4x2", "4x4", "6x2", "Half Page", "Full Page" };
+	public static final String[] PRICES = new String[] { "$30", "$60", "$45", "$360", "$720" };
 
 	private int date;
 	private int size;

@@ -26,8 +26,7 @@ import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
 public class PanelBusiness extends JPanel {
-	private JLabel lblBusinessName, lblAddress, lblCity, lblState, lblZip,
-			lblPhone, lblEmail;
+	private JLabel lblBusinessName, lblAddress, lblCity, lblState, lblZip, lblPhone, lblEmail;
 	private JButton mbutton;
 	private ArrayList<JPanel> adPanels;
 	private PanelContract panelContract;
@@ -41,8 +40,7 @@ public class PanelBusiness extends JPanel {
 	 */
 	public PanelBusiness(Window w) {
 		final Window window = w;
-		setLayout(new MigLayout("", "[grow][grow][grow][][grow]",
-				"[][][][][][][grow]"));
+		setLayout(new MigLayout("", "[grow][grow][grow][][grow]", "[][][][][][][grow]"));
 
 		lblBusinessName = new JLabel("Business Name");
 		lblBusinessName.setFont(new Font("Segoe WP SemiLight", Font.PLAIN, 36));
@@ -91,8 +89,7 @@ public class PanelBusiness extends JPanel {
 
 		int panelContractWidth = 290;
 		panelContract = new PanelContract();
-		panelContract.setPreferredSize(new Dimension(panelContractWidth,
-				(int) (1.3 * panelContractWidth)));
+		panelContract.setPreferredSize(new Dimension(panelContractWidth, (int) (1.3 * panelContractWidth)));
 		panelContract.setBorder(new LineBorder(new Color(0, 0, 0)));
 		add(panelContract, "cell 4 4 1 3,alignx center,aligny top");
 
@@ -131,8 +128,7 @@ public class PanelBusiness extends JPanel {
 						panelContract.setImage(img);
 						panelContract.repaint();
 						DataHandler.getCurrentBusiness().setContractImage(img);
-						ImageIO.write(img, "png", new File(DataHandler
-								.getCurrentBusiness().getName() + ".png"));
+						ImageIO.write(img, "png", new File(DataHandler.getCurrentBusiness().getName() + ".png"));
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -143,11 +139,9 @@ public class PanelBusiness extends JPanel {
 		mbutton = new JButton("Delete Record");
 		mbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int choice = JOptionPane.showConfirmDialog(null,
-						"Are you sure you wish to delete this business?");
+				int choice = JOptionPane.showConfirmDialog(null, "Are you sure you wish to delete this business?");
 				if (choice == 0) {
-					DataHandler.businessList
-							.remove(DataHandler.currentBusinessIndex);
+					DataHandler.businessList.remove(DataHandler.currentBusinessIndex);
 					DataHandler.currentBusinessIndex--;
 					update();
 				}

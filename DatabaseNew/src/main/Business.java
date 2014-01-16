@@ -43,8 +43,7 @@ public class Business {
 					int date = Character.getNumericValue(s.charAt(0));
 					int size = Character.getNumericValue(s.charAt(1));
 					int price = Character.getNumericValue(s.charAt(2));
-					advertisements.add(new Advertisement(date, size, price,
-							true));
+					advertisements.add(new Advertisement(date, size, price, true));
 				}
 			}
 		}
@@ -80,9 +79,8 @@ public class Business {
 	}
 
 	public String toString() {
-		return "Name: " + name + " Address: " + address + " City: " + city
-				+ " State: " + state + " ZIP: " + zip + " Phone: " + phone
-				+ " Email: " + email;
+		return "Name: " + name + " Address: " + address + " City: " + city + " State: " + state + " ZIP: " + zip
+				+ " Phone: " + phone + " Email: " + email;
 	}
 
 	public String toCSV() {
@@ -97,11 +95,10 @@ public class Business {
 			adString += ad.getPrice();
 		}
 
-		return formatNull(name) + delimiter + formatNull(address) + delimiter
-				+ formatNull(city) + delimiter + formatNull(state) + delimiter
-				+ formatNull(zip) + delimiter + formatNull(phone) + delimiter
-				+ formatNull(email) + delimiter + formatNull(notes) + delimiter
-				+ formatNull(contractImage) + delimiter + adString + newline;
+		return formatNull(name) + delimiter + formatNull(address) + delimiter + formatNull(city) + delimiter
+				+ formatNull(state) + delimiter + formatNull(zip) + delimiter + formatNull(phone) + delimiter
+				+ formatNull(email) + delimiter + formatNull(notes) + delimiter + formatNull(contractImage) + delimiter
+				+ adString + newline;
 	}
 
 	public void setInfo(String[] arguments) {

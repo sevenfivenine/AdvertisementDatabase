@@ -26,13 +26,13 @@ import panel.PanelNewBusiness;
 public class Window {
 
 	private JFrame theFrame;
-	private JPanel mainPanel, panelBusiness, panelMonth, panelNewBusiness,
-			panelEditBusiness;
+	private JPanel mainPanel, panelBusiness, panelMonth, panelNewBusiness, panelEditBusiness;
 	private JMenuBar menuBar;
 	private JMenu mnFile;
 	private JMenu mnEdit;
 	private JMenu mnHelp;
 	private JMenuItem mntmPrint;
+	private JMenuItem mntmConfigureNewYear;
 
 	/**
 	 * Launch the application.
@@ -88,6 +88,8 @@ public class Window {
 			e.printStackTrace();
 		}
 
+		theFrame.setTitle("Advertisement Database v0.1");
+
 		try {
 			DataHandler.load();
 		} catch (IOException e) {
@@ -120,13 +122,21 @@ public class Window {
 		mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 
-		mntmPrint = new JMenuItem("Print");
+		mntmPrint = new JMenuItem("Print...");
 		mntmPrint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PrintHandler.printTest(mainPanel);
 			}
 		});
 		mnFile.add(mntmPrint);
+
+		mntmConfigureNewYear = new JMenuItem("Configure New Year...");
+		mntmConfigureNewYear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DialogConfigureYear.launchNew();
+			}
+		});
+		mnFile.add(mntmConfigureNewYear);
 
 		mnEdit = new JMenu("Edit");
 		menuBar.add(mnEdit);

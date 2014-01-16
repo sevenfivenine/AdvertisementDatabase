@@ -31,8 +31,7 @@ public class PanelMonth extends JPanel {
 		setLayout(new MigLayout("", "[grow][]", "[][grow]"));
 
 		lblMonthName = new JLabel("Month Name");
-		lblMonthName.setFont(new Font("Tahoma", Font.PLAIN,
-				Format.FONT_SIZE_LARGE));
+		lblMonthName.setFont(new Font("Tahoma", Font.PLAIN, Format.FONT_SIZE_LARGE));
 		add(lblMonthName, "flowx,cell 0 0,alignx left");
 
 		String[] columnNames = { "Business Name", "Size", "Price" };
@@ -48,8 +47,7 @@ public class PanelMonth extends JPanel {
 				update();
 			}
 		});
-		mcomboBox.setModel(new DefaultComboBoxModel<String>(
-				Advertisement.MONTHS));
+		mcomboBox.setModel(new DefaultComboBoxModel<String>(Advertisement.MONTHS));
 		add(mcomboBox, "cell 1 0,alignx right,aligny center");
 		mtable = new JTable(data, columnNames);
 
@@ -79,10 +77,8 @@ public class PanelMonth extends JPanel {
 
 				if (currentAd != null) {
 					mtable.setValueAt(currentBusiness.getName(), i, 0);
-					mtable.setValueAt(Advertisement.SIZES[currentAd.getSize()],
-							i, 1);
-					mtable.setValueAt(
-							Advertisement.PRICES[currentAd.getPrice()], i, 2);
+					mtable.setValueAt(Advertisement.SIZES[currentAd.getSize()], i, 1);
+					mtable.setValueAt(Advertisement.PRICES[currentAd.getPrice()], i, 2);
 				} else {
 					mtable.setValueAt("", i, 0);
 					mtable.setValueAt("", i, 1);

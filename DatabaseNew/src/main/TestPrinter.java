@@ -17,8 +17,7 @@ public class TestPrinter implements Printable {
 	}
 
 	@Override
-	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex)
-			throws PrinterException {
+	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
 		// We have only one page, and 'page'
 		// is zero-based
 		if (pageIndex > 0) {
@@ -35,8 +34,7 @@ public class TestPrinter implements Printable {
 		double sx = 0, sy = 0;
 
 		// Checks to see if panel won't fit within page
-		if (panel.getWidth() > pageFormat.getImageableWidth()
-				|| panel.getHeight() > pageFormat.getImageableHeight()) {
+		if (panel.getWidth() > pageFormat.getImageableWidth() || panel.getHeight() > pageFormat.getImageableHeight()) {
 
 			// Checks to see if panel is too wide
 			if (panel.getWidth() > pageFormat.getImageableWidth()) {
