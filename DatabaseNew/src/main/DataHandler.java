@@ -11,6 +11,8 @@ public class DataHandler {
 	public static int currentBusinessIndex;
 	public static int currentMonth;
 	public static int year;
+	private static FileWriter configWriter;
+	private static BufferedReader configReader;
 	private static FileWriter writer;
 	private static BufferedReader reader;
 
@@ -71,6 +73,10 @@ public class DataHandler {
 
 	public static void save() throws IOException {
 		try {
+			configWriter = new FileWriter("config.txt");
+			
+			configWriter.write("adBase v0.1 --CONFIGURATION--");
+			
 			writer = new FileWriter("data.csv");
 			
 			writer.write("<HEAD> " + year + "\r\n");
@@ -80,6 +86,9 @@ public class DataHandler {
 			}
 
 		} finally {
+			if (configWriter != null) {
+				configWriter.close();
+			}
 			if (writer != null) {
 				writer.close();
 			}

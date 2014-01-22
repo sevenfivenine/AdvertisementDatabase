@@ -90,7 +90,7 @@ public class Window {
 			e.printStackTrace();
 		}
 
-		theFrame.setTitle("Advertisement Database v0.1");
+		theFrame.setTitle("adBase v0.1");
 
 		File f = new File("data.csv");
 		if(f.exists())
