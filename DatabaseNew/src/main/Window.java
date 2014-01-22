@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -33,6 +34,7 @@ public class Window {
 	private JMenu mnHelp;
 	private JMenuItem mntmPrint;
 	private JMenuItem mntmConfigureNewYear;
+	private ToolBar toolBar;
 
 	/**
 	 * Launch the application.
@@ -90,6 +92,12 @@ public class Window {
 
 		theFrame.setTitle("Advertisement Database v0.1");
 
+		File f = new File("data.csv");
+		if(f.exists())
+			System.out.println("database exists");
+		else
+			System.out.println("database does not exist");
+		
 		try {
 			DataHandler.load();
 		} catch (IOException e) {
@@ -100,8 +108,9 @@ public class Window {
 		theFrame.getContentPane().add(mainPanel, BorderLayout.CENTER);
 		mainPanel.setLayout(new CardLayout(0, 0));
 
-		JToolBar toolBar = new ToolBar(mainPanel, this);
+		toolBar = new ToolBar(mainPanel, this);
 		theFrame.getContentPane().add(toolBar, BorderLayout.NORTH);
+		toolBar.update();
 
 		panelBusiness = new PanelBusiness(this);
 		mainPanel.add(panelBusiness, "Business");

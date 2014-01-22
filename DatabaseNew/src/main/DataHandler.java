@@ -10,6 +10,7 @@ public class DataHandler {
 	public static ArrayList<Business> businessList = new ArrayList<Business>();
 	public static int currentBusinessIndex;
 	public static int currentMonth;
+	public static int year;
 	private static FileWriter writer;
 	private static BufferedReader reader;
 
@@ -47,8 +48,16 @@ public class DataHandler {
 
 			String line;
 			while ((line = reader.readLine()) != null) {
-				arguments = line.split(",");
-				businessList.add(new Business(arguments));
+				if(line.startsWith("<HEAD>")) {
+					try {
+						year = Integer.parseInt(line.substring(7, 11));
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					}
+				} else {
+					arguments = line.split(",");
+					businessList.add(new Business(arguments));
+				}
 			}
 
 		} catch (IOException e) {
@@ -63,7 +72,9 @@ public class DataHandler {
 	public static void save() throws IOException {
 		try {
 			writer = new FileWriter("data.csv");
-
+			
+			writer.write("<HEAD> " + year + "\r\n");
+			
 			for (Business b : businessList) {
 				writer.write(b.toCSV());
 			}

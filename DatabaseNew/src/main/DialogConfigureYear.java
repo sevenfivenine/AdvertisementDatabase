@@ -16,14 +16,20 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import net.miginfocom.swing.MigLayout;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
 
-public class DialogConfigureYear extends JDialog {
+import javax.swing.border.LineBorder;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class DialogConfigureYear extends JDialog implements ActionListener {
 
 	private final JPanel mcontentPanel = new JPanel();
 	private JTextField mtextField;
 	private JLabel label;
+	private JTextArea txtrSeptember;
 
 	/**
 	 * Launch the application.
@@ -46,7 +52,7 @@ public class DialogConfigureYear extends JDialog {
 	 * Create the dialog.
 	 */
 	public DialogConfigureYear() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 350, 200);
 		setLocationRelativeTo(null);
 		setTitle("Configure New Year");
 		getContentPane().setLayout(new BorderLayout());
@@ -59,7 +65,7 @@ public class DialogConfigureYear extends JDialog {
 		}
 		{
 			JLabel lblIssues = new JLabel("Issues:");
-			mcontentPanel.add(lblIssues, "flowx,cell 0 1,alignx center");
+			mcontentPanel.add(lblIssues, "flowx,cell 0 1,alignx center,aligny top");
 		}
 		{
 			mtextField = new JTextField();
@@ -93,18 +99,20 @@ public class DialogConfigureYear extends JDialog {
 			});
 			mtextField.setText("2014");
 			mcontentPanel.add(mtextField, "cell 0 0,alignx center");
-			mtextField.setColumns(10);
+			mtextField.setColumns(4);
 		}
 		{
-			label = new JLabel(" - 2015");
+			label = new JLabel("- 2015");
 			mcontentPanel.add(label, "cell 0 0,alignx center");
 		}
 		{
-			JTextArea txtrSeptember = new JTextArea();
+			txtrSeptember = new JTextArea();
+			txtrSeptember.setLineWrap(true);
+			txtrSeptember.setPreferredSize(new Dimension(180, 60));
 			txtrSeptember.setBorder(new LineBorder(Color.LIGHT_GRAY));
 			txtrSeptember.setFont(new Font("Tahoma", Font.PLAIN, 11));
-			txtrSeptember.setText("September");
-			mcontentPanel.add(txtrSeptember, "cell 0 1,alignx center,growy");
+			txtrSeptember.setText("September,October,November,December,January,February,March,April");
+			mcontentPanel.add(txtrSeptember, "cell 0 1,alignx center,aligny top");
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -115,12 +123,37 @@ public class DialogConfigureYear extends JDialog {
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
+				okButton.addActionListener(this);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
+				cancelButton.addActionListener(this);
 			}
 		}
 	}
+
+	public void actionPerformed(ActionEvent e) {
+		if ("Cancel".equals(e.getActionCommand())) {
+			dispose();
+		} else if("OK".equals(e.getActionCommand())) {
+			configureNewYear();
+		}
+	}
+
+	public void configureNewYear() {
+		int year = 0;
+		try {
+			year = Integer.parseInt(mtextField.getText());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String issues = txtrSeptember.getText();
+		System.out.println(issues);
+		String[] issuesArray = issues.split(",");
+		for(String s : issuesArray) {
+			System.out.println(s);
+		}
+	} 
 }

@@ -13,6 +13,8 @@ import panel.PanelBusiness;
 
 @SuppressWarnings("serial")
 public class ToolBar extends JToolBar {
+	private JLabel lblYear;
+
 	public ToolBar(JPanel p, Window w) {
 		final JPanel panel = p;
 		final Window window = w;
@@ -49,5 +51,12 @@ public class ToolBar extends JToolBar {
 			}
 		});
 		add(btnNewBusiness);
+		
+		lblYear = new JLabel("Year");
+		add(lblYear);
+	}
+	
+	public void update() {
+		lblYear.setText(Integer.toString(DataHandler.year));
 	}
 }
