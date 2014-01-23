@@ -148,6 +148,7 @@ public class DialogConfigureYear extends JDialog implements ActionListener {
 			DataHandler.save();
 			DataHandler.year = year;
 			DataHandler.currentReadFile = "adBase\\" + year + "-" + (year + 1) + ".csv";
+			dispose();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
