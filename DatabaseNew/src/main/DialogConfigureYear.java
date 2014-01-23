@@ -1,28 +1,27 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import net.miginfocom.swing.MigLayout;
-
-import javax.swing.border.LineBorder;
-
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class DialogConfigureYear extends JDialog implements ActionListener {
 
@@ -137,7 +136,7 @@ public class DialogConfigureYear extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if ("Cancel".equals(e.getActionCommand())) {
 			dispose();
-		} else if("OK".equals(e.getActionCommand())) {
+		} else if ("OK".equals(e.getActionCommand())) {
 			configureNewYear();
 		}
 	}
@@ -146,14 +145,21 @@ public class DialogConfigureYear extends JDialog implements ActionListener {
 		int year = 0;
 		try {
 			year = Integer.parseInt(mtextField.getText());
+			DataHandler.save();
+			DataHandler.year = year;
+			DataHandler.currentReadFile = "adBase\\" + year + "-" + (year + 1) + ".csv";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		String issues = txtrSeptember.getText();
 		System.out.println(issues);
 		String[] issuesArray = issues.split(",");
-		for(String s : issuesArray) {
+		for (String s : issuesArray) {
 			System.out.println(s);
 		}
-	} 
+	}
+
+	public static void noDatabaseMessage() {
+		JOptionPane.showMessageDialog(null, "Open a data file or create a new one.");
+	}
 }

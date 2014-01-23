@@ -10,12 +10,12 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -35,6 +35,7 @@ public class Window {
 	private JMenuItem mntmPrint;
 	private JMenuItem mntmConfigureNewYear;
 	private ToolBar toolBar;
+	private JMenuItem mntmOpen;
 
 	/**
 	 * Launch the application.
@@ -50,6 +51,15 @@ public class Window {
 				}
 			}
 		});
+
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		if (DataHandler.currentReadFile == null)
+			DialogConfigureYear.noDatabaseMessage();
 	}
 
 	/**
@@ -92,12 +102,12 @@ public class Window {
 
 		theFrame.setTitle("adBase v0.1");
 
-		File f = new File("data.csv");
-		if(f.exists())
-			System.out.println("database exists");
-		else
-			System.out.println("database does not exist");
-		
+		// File f = new File(DataHandler.defaultFile);
+		// if (f.exists())
+		// System.out.println("database exists");
+		// else
+		// System.out.println("database does not exist");
+
 		try {
 			DataHandler.load();
 		} catch (IOException e) {
@@ -131,14 +141,6 @@ public class Window {
 		mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 
-		mntmPrint = new JMenuItem("Print...");
-		mntmPrint.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PrintHandler.printTest(mainPanel);
-			}
-		});
-		mnFile.add(mntmPrint);
-
 		mntmConfigureNewYear = new JMenuItem("Configure New Year...");
 		mntmConfigureNewYear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -147,12 +149,41 @@ public class Window {
 		});
 		mnFile.add(mntmConfigureNewYear);
 
+		mntmOpen = new JMenuItem("Open...");
+		mntmOpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();
+				int returnVal = fc.showOpenDialog(Window.this.getFrame());
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+
+					if (file.getName().endsWith(".csv")) {
+						try {
+							DataHandler.currentReadFile = file.getName();
+							DataHandler.save();
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+					}
+
+				}
+			}
+		});
+		mnFile.add(mntmOpen);
+
+		mntmPrint = new JMenuItem("Print...");
+		mntmPrint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PrintHandler.printTest(mainPanel);
+			}
+		});
+		mnFile.add(mntmPrint);
+
 		mnEdit = new JMenu("Edit");
 		menuBar.add(mnEdit);
 
 		mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
-
 	}
 
 	public JFrame getFrame() {
@@ -189,6 +220,10 @@ public class Window {
 
 	public void setPanelEditBusiness(JPanel panelEditBusiness) {
 		this.panelEditBusiness = panelEditBusiness;
+	}
+
+	public ToolBar getToolBar() {
+		return toolBar;
 	}
 
 }

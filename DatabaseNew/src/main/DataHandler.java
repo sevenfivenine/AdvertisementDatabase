@@ -8,10 +8,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class DataHandler {
+	public static final String CONFIG_HEADER = "adBase v0.1 --CONFIGURATION--";
+
 	public static ArrayList<Business> businessList = new ArrayList<Business>();
 	public static int currentBusinessIndex;
 	public static int currentMonth;
 	public static int year;
+	public static String currentReadFile;
 	private static FileWriter configWriter;
 	private static BufferedReader configReader;
 	private static FileWriter writer;
@@ -47,19 +50,29 @@ public class DataHandler {
 		String[] arguments = new String[] {};
 
 		try {
-			reader = new BufferedReader(new FileReader("adBase\\data.csv"));
+			configReader = new BufferedReader(new FileReader("adBase\\config.txt"));
 
 			String line;
-			while ((line = reader.readLine()) != null) {
-				if (line.startsWith("<HEAD>")) {
-					try {
-						year = Integer.parseInt(line.substring(7, 11));
-					} catch (NumberFormatException e) {
-						e.printStackTrace();
+			while ((line = configReader.readLine()) != null) {
+				if (!line.equals(CONFIG_HEADER)) {
+					currentReadFile = line;
+				}
+			}
+
+			if (currentReadFile != null) {
+				reader = new BufferedReader(new FileReader(currentReadFile));
+
+				while ((line = reader.readLine()) != null) {
+					if (line.startsWith("<HEAD>")) {
+						try {
+							year = Integer.parseInt(line.substring(7, 11));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} else {
+						arguments = line.split(",");
+						businessList.add(new Business(arguments));
 					}
-				} else {
-					arguments = line.split(",");
-					businessList.add(new Business(arguments));
 				}
 			}
 
@@ -74,18 +87,26 @@ public class DataHandler {
 
 	public static void save() throws IOException {
 		try {
-			new File("adBase").mkdirs();
+			File directory = new File("adBase");
+			if (!directory.exists()) {
+				directory.mkdirs();
+			}
 
 			configWriter = new FileWriter("adBase\\config.txt");
 
-			configWriter.write("adBase v0.1 --CONFIGURATION--");
+			configWriter.write(CONFIG_HEADER + "\r\n");
 
-			writer = new FileWriter("adBase\\data.csv");
+			if (currentReadFile != null)
+				configWriter.write(currentReadFile + "\r\n");
 
-			writer.write("<HEAD> " + year + "\r\n");
+			if (currentReadFile != null) {
+				writer = new FileWriter(currentReadFile);
 
-			for (Business b : businessList) {
-				writer.write(b.toCSV());
+				writer.write("<HEAD> " + year + "\r\n");
+
+				for (Business b : businessList) {
+					writer.write(b.toCSV());
+				}
 			}
 
 		} finally {
