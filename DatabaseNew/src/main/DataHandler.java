@@ -1,6 +1,7 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -46,11 +47,11 @@ public class DataHandler {
 		String[] arguments = new String[] {};
 
 		try {
-			reader = new BufferedReader(new FileReader("data.csv"));
+			reader = new BufferedReader(new FileReader("adBase\\data.csv"));
 
 			String line;
 			while ((line = reader.readLine()) != null) {
-				if(line.startsWith("<HEAD>")) {
+				if (line.startsWith("<HEAD>")) {
 					try {
 						year = Integer.parseInt(line.substring(7, 11));
 					} catch (NumberFormatException e) {
@@ -73,14 +74,16 @@ public class DataHandler {
 
 	public static void save() throws IOException {
 		try {
-			configWriter = new FileWriter("config.txt");
-			
+			new File("adBase").mkdirs();
+
+			configWriter = new FileWriter("adBase\\config.txt");
+
 			configWriter.write("adBase v0.1 --CONFIGURATION--");
-			
-			writer = new FileWriter("data.csv");
-			
+
+			writer = new FileWriter("adBase\\data.csv");
+
 			writer.write("<HEAD> " + year + "\r\n");
-			
+
 			for (Business b : businessList) {
 				writer.write(b.toCSV());
 			}
