@@ -14,7 +14,7 @@ public class DataHandler {
 	public static int currentBusinessIndex;
 	public static int currentMonth;
 	public static int year;
-	public static String currentReadFile;
+	public static String currentReadFileName;
 	private static FileWriter configWriter;
 	private static BufferedReader configReader;
 	private static FileWriter writer;
@@ -55,12 +55,12 @@ public class DataHandler {
 			String line;
 			while ((line = configReader.readLine()) != null) {
 				if (!line.equals(CONFIG_HEADER)) {
-					currentReadFile = line;
+					currentReadFileName = line;
 				}
 			}
 
-			if (currentReadFile != null) {
-				reader = new BufferedReader(new FileReader(currentReadFile));
+			if (currentReadFileName != null) {
+				reader = new BufferedReader(new FileReader(currentReadFileName));
 
 				while ((line = reader.readLine()) != null) {
 					if (line.startsWith("<HEAD>")) {
@@ -76,8 +76,6 @@ public class DataHandler {
 				}
 			}
 
-		} catch (IOException e) {
-			e.printStackTrace();
 		} finally {
 			if (reader != null) {
 				reader.close();
@@ -96,11 +94,11 @@ public class DataHandler {
 
 			configWriter.write(CONFIG_HEADER + "\r\n");
 
-			if (currentReadFile != null)
-				configWriter.write(currentReadFile + "\r\n");
+			if (currentReadFileName != null)
+				configWriter.write(currentReadFileName + "\r\n");
 
-			if (currentReadFile != null) {
-				writer = new FileWriter(currentReadFile);
+			if (currentReadFileName != null) {
+				writer = new FileWriter(currentReadFileName);
 
 				writer.write("<HEAD> " + year + "\r\n");
 
@@ -116,6 +114,20 @@ public class DataHandler {
 			if (writer != null) {
 				writer.close();
 			}
+		}
+	}
+
+	/**
+	 * Saves the current file, then loads inputFile.
+	 * @param inputFile
+	 */
+	public static void openNewFile(File inputFile) {
+		try {
+			save();
+			currentReadFileName = inputFile.getName();
+			load();
+		} catch(IOException e) {
+			e.printStackTrace();
 		}
 	}
 

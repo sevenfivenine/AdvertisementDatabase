@@ -26,16 +26,19 @@ import panel.PanelNewBusiness;
 
 public class Window {
 
+	/**
+	 * The main frame for adBase.
+	 */
 	private JFrame theFrame;
-	private JPanel mainPanel, panelBusiness, panelMonth, panelNewBusiness, panelEditBusiness;
+	/**
+	 * The main panel for adBase, whose layout is a CardLayout containing the different panel views. 
+	 */
+	private JPanel mainPanel;
+	private JPanel panelBusiness, panelMonth, panelNewBusiness, panelEditBusiness;
 	private JMenuBar menuBar;
-	private JMenu mnFile;
-	private JMenu mnEdit;
-	private JMenu mnHelp;
-	private JMenuItem mntmPrint;
-	private JMenuItem mntmConfigureNewYear;
+	private JMenu mnFile, mnEdit, mnHelp;
+	private JMenuItem mntmPrint, mntmConfigureNewYear, mntmOpen;
 	private ToolBar toolBar;
-	private JMenuItem mntmOpen;
 
 	/**
 	 * Launch the application.
@@ -52,13 +55,20 @@ public class Window {
 			}
 		});
 
+		checkDataStatus();
+	}
+
+	/**
+	 * Checks to see if there is data for adBase to work off of. If there is no data, will open a dialog notifying the user.
+	 */
+	public static void checkDataStatus() {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
-		if (DataHandler.currentReadFile == null)
+		
+		if (DataHandler.currentReadFileName == null)
 			DialogConfigureYear.noDatabaseMessage();
 	}
 
@@ -84,8 +94,11 @@ public class Window {
 				}
 			}
 		});
-		// theFrame.setBounds(100, 100, 450, 300);
+		
+		// The default setting is (100, 100, 450, 300)
 		theFrame.setBounds(100, 100, 900, 600);
+		
+		// Centers the frame on the screen
 		theFrame.setLocationRelativeTo(null);
 		theFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		try {
@@ -101,12 +114,6 @@ public class Window {
 		}
 
 		theFrame.setTitle("adBase v0.1");
-
-		// File f = new File(DataHandler.defaultFile);
-		// if (f.exists())
-		// System.out.println("database exists");
-		// else
-		// System.out.println("database does not exist");
 
 		try {
 			DataHandler.load();
@@ -133,8 +140,14 @@ public class Window {
 
 		panelEditBusiness = new PanelEditBusiness(this);
 		mainPanel.add(panelEditBusiness, "Edit Business");
+		
+		initializeMenu();
+	}
 
-		// Menu
+	/**
+	 * Initializes adBase's menu.
+	 */
+	public void initializeMenu() {
 		menuBar = new JMenuBar();
 		theFrame.setJMenuBar(menuBar);
 
@@ -153,19 +166,13 @@ public class Window {
 		mntmOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser();
-				int returnVal = fc.showOpenDialog(Window.this.getFrame());
+				int returnVal = fc.showOpenDialog(theFrame);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 
 					if (file.getName().endsWith(".csv")) {
-						try {
-							DataHandler.currentReadFile = file.getName();
-							DataHandler.save();
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
+						DataHandler.openNewFile(file);
 					}
-
 				}
 			}
 		});
@@ -174,7 +181,7 @@ public class Window {
 		mntmPrint = new JMenuItem("Print...");
 		mntmPrint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrintHandler.printTest(mainPanel);
+				PrintHandler.printPanel(mainPanel);
 			}
 		});
 		mnFile.add(mntmPrint);
@@ -190,16 +197,8 @@ public class Window {
 		return theFrame;
 	}
 
-	public void setFrame(JFrame mframe) {
-		this.theFrame = mframe;
-	}
-
 	public JPanel getPanel() {
 		return mainPanel;
-	}
-
-	public void setPanel(JPanel panel) {
-		this.mainPanel = panel;
 	}
 
 	public JPanel getPanelBusiness() {
@@ -216,10 +215,6 @@ public class Window {
 
 	public JPanel getPanelEditBusiness() {
 		return panelEditBusiness;
-	}
-
-	public void setPanelEditBusiness(JPanel panelEditBusiness) {
-		this.panelEditBusiness = panelEditBusiness;
 	}
 
 	public ToolBar getToolBar() {

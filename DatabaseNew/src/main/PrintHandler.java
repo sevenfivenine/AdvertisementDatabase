@@ -7,7 +7,10 @@ import javax.swing.JPanel;
 
 public class PrintHandler {
 
-	public static void printTest(JPanel panel) {
+	/**
+	 * Prints the panel.
+	 */
+	public static void printPanel(JPanel panel) {
 		PrinterJob job = PrinterJob.getPrinterJob();
 
 		job.setPrintable(new TestPrinter(panel));
