@@ -9,10 +9,9 @@ public class Advertisement {
 	private int date;
 	private int size;
 	private int price;
-	private boolean paid;
+	private int paid;
 
-	public Advertisement(int date, int size, int price, boolean paid) {
-		super();
+	public Advertisement(int date, int size, int price, int paid) {
 		this.date = date;
 		this.size = size;
 		this.price = price;
@@ -43,11 +42,11 @@ public class Advertisement {
 		this.price = price;
 	}
 
-	public boolean isPaid() {
+	public int getPaid() {
 		return paid;
 	}
 
-	public void setPaid(boolean paid) {
+	public void setPaid(int paid) {
 		this.paid = paid;
 	}
 

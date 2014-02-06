@@ -3,6 +3,7 @@ package main;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -12,8 +13,11 @@ public class Business {
 	private ArrayList<Advertisement> advertisements;
 	private Image contractImage;
 
+	/**
+	 * Use this constructor with an array of Strings of length 10.
+	 * @param arguments
+	 */
 	public Business(String[] arguments) {
-		super();
 		this.name = arguments[0];
 		this.address = arguments[1];
 		this.city = arguments[2];
@@ -27,7 +31,7 @@ public class Business {
 			try {
 				BufferedImage img = ImageIO.read(new File(arguments[8]));
 				this.contractImage = img;
-			} catch (Exception e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -43,14 +47,18 @@ public class Business {
 					int date = Character.getNumericValue(s.charAt(0));
 					int size = Character.getNumericValue(s.charAt(1));
 					int price = Character.getNumericValue(s.charAt(2));
-					advertisements.add(new Advertisement(date, size, price, true));
+					advertisements.add(new Advertisement(date, size, price, 0));
 				}
 			}
 		}
 	}
 
+	/**
+	 * Use this constructor with an array of Strings of length 7, and an ArrayList of Advertisements.
+	 * @param arguments
+	 * @param ads
+	 */
 	public Business(String[] arguments, ArrayList<Advertisement> ads) {
-		super();
 		this.name = arguments[0];
 		this.address = arguments[1];
 		this.city = arguments[2];
@@ -62,6 +70,10 @@ public class Business {
 		setAdvertisements(ads);
 	}
 
+	/**
+	 * Returns a string "&lt;NULL&gt;" if s is null or empty.
+	 * @param s
+	 */
 	public String formatNull(String s) {
 		if (s == null || s.equals("")) {
 			return "<NULL>";
@@ -70,6 +82,10 @@ public class Business {
 		return s;
 	}
 
+	/**
+	 * Returns a string "&lt;NO IMAGE&gt;" if img is null or empty.
+	 * @param img
+	 */
 	private String formatNull(Image img) {
 		if (img == null) {
 			return "<NO IMAGE>";
@@ -78,11 +94,17 @@ public class Business {
 		return formatNull(name) + ".png";
 	}
 
+	/**
+	 * Returns a string with the contact information of the business.
+	 */
 	public String toString() {
 		return "Name: " + name + " Address: " + address + " City: " + city + " State: " + state + " ZIP: " + zip
 				+ " Phone: " + phone + " Email: " + email;
 	}
 
+	/**
+	 * Returns a comma-separated value format of the business for saving data.
+	 */
 	public String toCSV() {
 		String delimiter = ",";
 		String newline = "\r\n";
@@ -93,6 +115,7 @@ public class Business {
 			adString += ad.getDate();
 			adString += ad.getSize();
 			adString += ad.getPrice();
+			adString += ad.getPaid();
 		}
 
 		return formatNull(name) + delimiter + formatNull(address) + delimiter + formatNull(city) + delimiter
@@ -101,6 +124,10 @@ public class Business {
 				+ adString + newline;
 	}
 
+	/**
+	 * Sets the contact information to arguments.
+	 * @param arguments a String array of length 7.
+	 */
 	public void setInfo(String[] arguments) {
 		this.name = arguments[0];
 		this.address = arguments[1];

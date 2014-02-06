@@ -126,7 +126,7 @@ public class PanelEditBusiness extends JPanel {
 
 					if (adPanel.isEnabled()) {
 						ads.add(new Advertisement(adPanel.getIndex(), adPanel.getSizeBox().getSelectedIndex(), adPanel
-								.getPriceBox().getSelectedIndex(), true));
+								.getPriceBox().getSelectedIndex(), 0));
 					}
 
 				}

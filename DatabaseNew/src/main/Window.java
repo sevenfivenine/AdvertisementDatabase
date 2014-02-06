@@ -26,6 +26,8 @@ import panel.PanelNewBusiness;
 
 public class Window {
 
+	public static final String VERSION_NUMBER = "v0.1";
+	
 	/**
 	 * The main frame for adBase.
 	 */
@@ -68,7 +70,7 @@ public class Window {
 			e.printStackTrace();
 		}
 		
-		if (DataHandler.currentReadFileName == null)
+		if (DataHandler.currentDataFileName == null)
 			DialogConfigureYear.noDatabaseMessage();
 	}
 
